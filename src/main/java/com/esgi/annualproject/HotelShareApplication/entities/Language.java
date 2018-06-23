@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+@Entity
+@Table(name = "LANGUAGE")
 public class Language extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

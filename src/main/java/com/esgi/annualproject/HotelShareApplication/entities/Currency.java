@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "CURRENCY")
 public class Currency extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

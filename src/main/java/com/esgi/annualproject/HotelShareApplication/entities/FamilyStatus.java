@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "FAMILY_STATUS")
 public class FamilyStatus extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

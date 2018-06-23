@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.util.Set;
 
 @Entity
-@Table(name = "User")
+@Table(name = "USER")
 public class User extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

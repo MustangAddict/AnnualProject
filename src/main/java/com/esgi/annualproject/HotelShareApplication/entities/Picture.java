@@ -7,6 +7,8 @@ import java.util.Set;
 /*
  *  A VOIR COMMENT STOCKER LES IMAGES ET LES INFOS REQUISES
  */
+@Entity
+@Table(name = "PICTURE")
 public class Picture extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

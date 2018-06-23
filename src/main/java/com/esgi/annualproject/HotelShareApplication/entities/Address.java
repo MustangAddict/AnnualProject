@@ -7,6 +7,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "ADDRESS")
 public class Address extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

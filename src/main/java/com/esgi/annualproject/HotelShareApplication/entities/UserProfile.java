@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "UserProfile")
+@Table(name = "USER_PROFILE")
 public class UserProfile extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +25,6 @@ public class UserProfile extends AuditModel implements Serializable {
             cascade =  CascadeType.ALL,
             mappedBy = "userProfile")
     private Address address;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_GENDER", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Gender gender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CURRENCY", nullable = false)
@@ -82,6 +76,9 @@ public class UserProfile extends AuditModel implements Serializable {
 
     @Column(name = "LASTNAME")
     private String lastname;
+
+    @Column(name = "GENDER")
+    private String gender;
 
     @Column(name = "BIRTHDATE")
     private Date birthDate;

@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
+@Table(name = "RESERVATION")
 public class Reservation extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
