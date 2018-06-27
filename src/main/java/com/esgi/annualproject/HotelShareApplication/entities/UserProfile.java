@@ -1,6 +1,10 @@
 package com.esgi.annualproject.HotelShareApplication.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -11,6 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "USER_PROFILE")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class UserProfile extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +34,6 @@ public class UserProfile extends AuditModel implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CURRENCY", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Currency currency;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,15 +62,6 @@ public class UserProfile extends AuditModel implements Serializable {
             joinColumns = { @JoinColumn(name = "ID_PROFILE") },
             inverseJoinColumns = { @JoinColumn(name = "ID_LANGUAGE") })
     private Set<Language> languages;
-
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            })
-    @JoinTable(name = "USERPROFILE_PICTURE",
-            joinColumns = { @JoinColumn(name = "ID_PROFILE") },
-            inverseJoinColumns = { @JoinColumn(name = "ID_PICTURE") })
-    private Set<Picture> pictures;
 
     @Column(name = "IS_ADMIN")
     private boolean isAdmin;

@@ -1,6 +1,10 @@
 package com.esgi.annualproject.HotelShareApplication.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -10,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ROOM")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Room extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,38 +30,29 @@ public class Room extends AuditModel implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USER", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ROOMTYPE", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private RoomType roomType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_BED", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Bed bed;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            })
+    @OneToMany(mappedBy = "room")
+    private Set<Reservation> reservations;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "ROOM_EQUIPMENT",
             joinColumns = { @JoinColumn(name = "ID_ROOM") },
             inverseJoinColumns = { @JoinColumn(name = "ID_EQUIPMENT") })
     private Set<Equipment> equipments;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            })
-    @JoinTable(name = "ROOM_PICTURE",
-            joinColumns = { @JoinColumn(name = "ID_ROOM") },
-            inverseJoinColumns = { @JoinColumn(name = "ID_PICTURE") })
-    private Set<Picture> pictures;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "rooms")
+    private Set<Review> reviews;
 
     @Column(name = "NUMBER_ROOMS")
     private int numberRooms;
@@ -76,10 +72,5 @@ public class Room extends AuditModel implements Serializable {
     @Column(name = "NAME_CONTACT")
     private String nameContact;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            },
-            mappedBy = "rooms")
-    private Set<Review> reviews;
+
 }

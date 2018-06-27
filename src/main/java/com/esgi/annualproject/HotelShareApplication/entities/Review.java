@@ -1,6 +1,10 @@
 package com.esgi.annualproject.HotelShareApplication.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -10,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "REVIEW")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Review extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

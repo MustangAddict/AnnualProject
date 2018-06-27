@@ -1,6 +1,10 @@
 package com.esgi.annualproject.HotelShareApplication.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -10,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "HOTEL")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Hotel extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +24,6 @@ public class Hotel extends AuditModel implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_HOTELTYPE", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private HotelType hotelType;
 
     @OneToOne(fetch = FetchType.LAZY,
@@ -30,44 +34,28 @@ public class Hotel extends AuditModel implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USER", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "HOTEL_LANGUAGE",
             joinColumns = { @JoinColumn(name = "ID_HOTEL") },
             inverseJoinColumns = { @JoinColumn(name = "ID_LANGUAGE") })
     private Set<Language> languages;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "HOTEL_CREDITCARD",
             joinColumns = { @JoinColumn(name = "ID_HOTEL") },
             inverseJoinColumns = { @JoinColumn(name = "ID_CREDITCARD") })
     private Set<CreditCard> creditCards;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "HOTEL_EQUIPMENT",
             joinColumns = { @JoinColumn(name = "ID_HOTEL") },
             inverseJoinColumns = { @JoinColumn(name = "ID_EQUIPMENT") })
     private Set<Equipment> equipments;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            })
-    @JoinTable(name = "HOTEL_PICTURE",
-            joinColumns = { @JoinColumn(name = "ID_HOTEL") },
-            inverseJoinColumns = { @JoinColumn(name = "ID_PICTURE") })
-    private Set<Picture> pictures;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "hotels")
+    private Set<Review> reviews;
 
     @Column(name = "NAME_HOTEL")
     private String nameHotel;
@@ -119,11 +107,4 @@ public class Hotel extends AuditModel implements Serializable {
 
     @Column(name = "ANIMALS_ALLOWED")
     private boolean animalAllowed;
-
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            },
-            mappedBy = "hotels")
-    private Set<Review> reviews;
 }
